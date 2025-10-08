@@ -3,47 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Test Générateur</title>
+  <title>URL LinkedIn Trackée | Générateur de lien</title>
   <style>
-    body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;max-width:700px;margin:40px auto;padding:16px}
-    label{display:block;margin-top:16px;font-weight:600}
-    select,input{width:100%;padding:10px;margin-top:6px}
-    .card{border:1px solid #ddd;border-radius:10px;padding:16px}
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      padding: 2rem;
+      max-width: 700px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: white;
+    }
+    h1 { color: #2c3e50; text-align: center; }
+    label { margin-top: 1.5rem; font-weight: bold; display:block; }
+    select, input[type="text"] {
+      margin-top: 0.5rem; padding: 0.6rem; font-size: 1rem; width: 100%;
+      border: 1px solid #ccc; border-radius: 5px;
+    }
+    #result { margin-top: 2rem; font-weight: bold; }
   </style>
 </head>
 <body>
-  <h1>Test — Générateur</h1>
+  <h1>Crée ton lien LinkedIn tracké en 3 clics</h1>
 
-  <div class="card">
-    <label for="emplacement">Quel est l'emplacement ?</label>
-    <select id="emplacement">
-      <option value="">-- Sélectionner --</option>
-      <option value="Post">Post</option>
-      <option value="Biographie">Biographie</option>
-    </select>
-
-    <div id="second-question"></div>
-  </div>
-
-  <script>
-    (function(){
-      function $(id){ return document.getElementById(id); }
-
-      function updateSecondQuestion(){
-        var emp = $("emplacement").value;
-        var box = $("second-question");
-        box.innerHTML = "";
-        if(!emp) return;
-        var html = '<label for="theme">'+(emp==='Post'?'Thématique ?':'Type de lien ?')+'</label>';
-        html += '<select id="theme"><option value="">-- Sélectionner --</option><option>Exemple A</option><option>Exemple B</option></select>';
-        box.innerHTML = html;
-      }
-
-      document.addEventListener("DOMContentLoaded", function(){
-        $("emplacement").addEventListener("change", updateSecondQuestion);
-        console.log("JS OK ✅");
-      });
-    })();
-  </script>
-</body>
-</html>
+  <!-- Q1 -->
+  <label for="emplacement">Quel est l'emplacement ?</label>
+  <select id="emplacement">
+    <option value="">-- Sélectionner --</option>
+    <opti
