@@ -90,9 +90,13 @@
       }
     };
 
-    // Liens Site (long/court) — maj + renommages
+    // Liens Site (long/court) — maj + renommages + Home Page
     const siteLinks = {
       'Post': {
+        'Home Page Site internet': {
+          long: 'https://www.chevalblanc-patrimoine.fr/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim',
+          short: 'https://shorturl.re/7htvn'
+        },
         'Bilan Patrimonial offert': {
           long: 'https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/votre-bilan-patrimonial-offert/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim',
           short: 'https://shorturl.re/7htro'
@@ -144,18 +148,29 @@
       fourth.innerHTML = "";
       if (!theme) return;
 
-      // cas spécial Biographie -> on zappe Site/Acuity
+      // Cas spéciaux qui zappent "Site/Acuity"
+      // a) Biographie + thèmes bioLinks
       if (emp === "Biographie" && bioLinks.hasOwnProperty(theme)) {
-        var hidden = document.createElement("input");
-        hidden.type = "hidden";
-        hidden.id = "destType";
-        hidden.value = "bio";
-        fourth.appendChild(hidden);
+        var hiddenBio = document.createElement("input");
+        hiddenBio.type = "hidden";
+        hiddenBio.id = "destType";
+        hiddenBio.value = "bio";
+        fourth.appendChild(hiddenBio);
+        renderLinkType();
+        return;
+      }
+      // b) Post + Home Page Site internet => uniquement Site
+      if (emp === "Post" && theme === "Home Page Site internet") {
+        var hiddenSite = document.createElement("input");
+        hiddenSite.type = "hidden";
+        hiddenSite.id = "destType";
+        hiddenSite.value = "site";
+        fourth.appendChild(hiddenSite);
         renderLinkType();
         return;
       }
 
-      // flow normal
+      // Flow normal : on demande Site ou Acuity
       var html = ''
         + '<label for="destType">Tu veux une redirection vers le site internet ou vers le planning de RDV (Acuity) ?</label>'
         + '<select id="destType">'
