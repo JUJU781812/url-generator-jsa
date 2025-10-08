@@ -78,6 +78,7 @@
   <script>
     // ====== MAPPINGS ======
 
+    // Cas spéciaux Biographie (on saute "Site/Acuity")
     var bioLinks = {
       "Inscription Newsletter": {
         long: "https://www.chevalblanc-patrimoine.fr/pages/inscription-emailing/",
@@ -89,31 +90,79 @@
       }
     };
 
+    // Liens RDV (Acuity) — tels que validés
     var links = {
       "Post": {
         "Bilan Patrimonial offert": {
-          "short": "https://shorturl.re/7glsu",
-          "long": "https://chevalblancpatrimoine.as.me/?appointmentType=15105353&field:13761652=linkedin&field:13824495=social&field:15813253=post_joachim"
+          short: "https://shorturl.re/7glsu",
+          long: "https://chevalblancpatrimoine.as.me/?appointmentType=15105353&field:13761652=linkedin&field:13824495=social&field:15813253=post_joachim"
         },
-        "Stratégie": { "short": "https://shorturl.re/7glsu", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=15105353" },
-        "Assurance vie luxembourgeoise": { "short": "https://shorturl.re/7glsv", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705748" },
-        "Équipe Sud-Ouest": { "short": "https://shorturl.re/7glsw", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=69809186" },
-        "Loi Malraux et monument historique": { "short": "https://shorturl.re/7glsx", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=24153643" },
-        "Private Equity": { "short": "https://shorturl.re/7glsc", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=26168218" },
-        "FCPI": { "short": "https://shorturl.re/7glsd", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=523544" },
-        "SCPI": { "short": "https://shorturl.re/7glse", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=111677851" },
-        "Immobilier neuf": { "short": "https://shorturl.re/7glsf", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705752" },
-        "Nue-propriété": { "short": "https://shorturl.re/7glsg", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705753" },
-        "Investir en immobilier": { "short": "https://shorturl.re/7glsi", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705755" },
-        "Maîtriser sa fiscalité": { "short": "https://shorturl.re/7glsj", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705757" },
-        "Cession d'actif immobilier": { "short": "https://shorturl.re/7glsk", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=523544" }
+        "Stratégie": {
+          short: "https://shorturl.re/7glsu",
+          long: "https://chevalblancpatrimoine.as.me/?appointmentType=15105353"
+        },
+        "Assurance vie luxembourgeoise": {
+          short: "https://shorturl.re/7glsv",
+          long: "https://chevalblancpatrimoine.as.me/?appointmentType=68705748"
+        },
+        "Équipe Sud-Ouest": {
+          short: "https://shorturl.re/7glsw",
+          long: "https://chevalblancpatrimoine.as.me/?appointmentType=69809186"
+        },
+        "Loi Malraux et monument historique": {
+          short: "https://shorturl.re/7glsx",
+          long: "https://chevalblancpatrimoine.as.me/?appointmentType=24153643"
+        },
+        "Private Equity": {
+          short: "https://shorturl.re/7glsc",
+          long: "https://chevalblancpatrimoine.as.me/?appointmentType=26168218"
+        },
+        "FCPI": {
+          short: "https://shorturl.re/7glsd",
+          long: "https://chevalblancpatrimoine.as.me/?appointmentType=523544"
+        },
+        "SCPI": {
+          short: "https://shorturl.re/7glse",
+          long: "https://chevalblancpatrimoine.as.me/?appointmentType=111677851"
+        },
+        "Immobilier neuf": {
+          short: "https://shorturl.re/7glsf",
+          long: "https://chevalblancpatrimoine.as.me/?appointmentType=68705752"
+        },
+        "Nue-propriété": {
+          short: "https://shorturl.re/7glsg",
+          long: "https://chevalblancpatrimoine.as.me/?appointmentType=68705753"
+        },
+        "Investir en immobilier": {
+          short: "https://shorturl.re/7glsi",
+          long: "https://chevalblancpatrimoine.as.me/?appointmentType=68705755"
+        },
+        "Maîtriser sa fiscalité": {
+          short: "https://shorturl.re/7glsj",
+          long: "https://chevalblancpatrimoine.as.me/?appointmentType=68705757"
+        },
+        "Cession d'actif immobilier": {
+          short: "https://shorturl.re/7glsk",
+          long: "https://chevalblancpatrimoine.as.me/?appointmentType=523544"
+        },
+        "Inscription Newsletter": {
+          short: "https://bit.ly/4h6ydIA",
+          long: "https://www.chevalblanc-patrimoine.fr/pages/inscription-newsletter"
+        }
       },
       "Biographie": {
-        "Prise de rendez-vous": { "short": "https://shorturl.re/7glsb", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=523544" },
-        "Inscription Newsletter": { "short": "https://bit.ly/4kg6vMq", "long": "https://www.chevalblanc-patrimoine.fr/pages/inscription-newsletter" }
+        "Prise de rendez-vous": {
+          short: "https://shorturl.re/7glsb",
+          long: "https://chevalblancpatrimoine.as.me/?appointmentType=523544"
+        },
+        "Inscription Newsletter": {
+          short: "https://bit.ly/4kg6vMq",
+          long: "https://www.chevalblanc-patrimoine.fr/pages/inscription-newsletter"
+        }
       }
     };
 
+    // Liens Site (long/court) — complet (inclut Home Page Site internet)
     const siteLinks = {
       'Post': {
         'Home Page Site internet': {
@@ -124,9 +173,54 @@
           long: 'https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/votre-bilan-patrimonial-offert/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim',
           short: 'https://shorturl.re/7htro'
         },
-        'Stratégie': { long: 'https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/gestion-de-patrimoine/architecture-ouverte-gestion-de-patrimoine/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim', short: 'https://shorturl.re/7htrp' },
-        'Assurance vie luxembourgeoise': { long: 'https://www.chevalblanc-patrimoine.fr/financier/les-meilleures-assurance-vie-luxembourgeoise/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim', short: 'https://shorturl.re/7htrq' },
-        'Équipe Sud-Ouest': { long: 'https://www.chevalblanc-patrimoine.fr/bureau-sud-ouest/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim', short: 'https://shorturl.re/7htrr' }
+        'Stratégie': {
+          long: 'https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/gestion-de-patrimoine/architecture-ouverte-gestion-de-patrimoine/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim',
+          short: 'https://shorturl.re/7htrp'
+        },
+        'Assurance vie luxembourgeoise': {
+          long: 'https://www.chevalblanc-patrimoine.fr/financier/les-meilleures-assurance-vie-luxembourgeoise/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim',
+          short: 'https://shorturl.re/7htrq'
+        },
+        'Équipe Sud-Ouest': {
+          long: 'https://www.chevalblanc-patrimoine.fr/bureau-sud-ouest/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim',
+          short: 'https://shorturl.re/7htrr'
+        },
+        'Loi Malraux et monument historique': {
+          long: 'https://www.chevalblanc-patrimoine.fr/immobilier/investir-avec-la-loi-monuments-historiques/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim',
+          short: 'https://shorturl.re/7htrs'
+        },
+        'Private Equity': {
+          long: 'https://www.chevalblanc-patrimoine.fr/financier/investir-en-private-equity/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim',
+          short: 'https://shorturl.re/7htrt'
+        },
+        'FCPI': {
+          long: 'https://www.chevalblanc-patrimoine.fr/financier/investir-en-fcpi/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim',
+          short: 'https://shorturl.re/7htru'
+        },
+        'SCPI': {
+          long: 'https://www.chevalblanc-patrimoine.fr/immobilier/optimiser-son-investissement-en-scpi/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim',
+          short: 'https://shorturl.re/7htrv'
+        },
+        'Immobilier neuf': {
+          long: 'https://www.chevalblanc-patrimoine.fr/immobilier/programmes-immobiliers/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim',
+          short: 'https://shorturl.re/7htrw'
+        },
+        'Nue-propriété': {
+          long: 'https://www.chevalblanc-patrimoine.fr/immobilier/investir-en-nue-propriete/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim',
+          short: 'https://shorturl.re/7htrx'
+        },
+        'Investir en immobilier': {
+          long: 'https://www.chevalblanc-patrimoine.fr/immobilier/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim',
+          short: 'https://shorturl.re/7htry'
+        },
+        'Maîtriser sa fiscalité': {
+          long: 'https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/maitriser-ma-fiscalite/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim',
+          short: 'https://shorturl.re/7htrz'
+        },
+        'Cession d\'actif immobilier': {
+          long: 'https://www.chevalblanc-patrimoine.fr/immobilier/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim',
+          short: 'https://shorturl.re/7htry'
+        }
       },
       'Biographie': {}
     };
@@ -152,6 +246,7 @@
       second.innerHTML = "";
       if (!emp) return;
 
+      // Fusionne les thématiques : RDV (links) + Site (siteLinks) + bio (bioLinks)
       var listA = Object.keys(links[emp] || {});
       var listS = Object.keys(siteLinks[emp] || {});
       var listB = (emp === 'Biographie') ? Object.keys(bioLinks || {}) : [];
@@ -175,6 +270,7 @@
       fourth.innerHTML = "";
       if (!theme) return;
 
+      // Cas spéciaux : on zappe "Site/Acuity"
       if (emp === "Biographie" && bioLinks.hasOwnProperty(theme)) {
         var hiddenBio = document.createElement("input");
         hiddenBio.type = "hidden";
@@ -194,6 +290,7 @@
         return;
       }
 
+      // Flow normal
       var html = ''
         + '<label for="destType">Tu veux une redirection vers le site internet ou vers le planning de RDV (Acuity) ?</label>'
         + '<select id="destType">'
