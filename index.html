@@ -23,6 +23,33 @@
       border: 1px solid #ccc; border-radius: 5px;
     }
     #result { margin-top: 2rem; font-weight: bold; }
+
+    /* --- bouton copier --- */
+    .copy-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 10px;
+    }
+    .btn {
+      background: #2c3e50;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .btn:hover { background: #34495e; }
+
+    .toast {
+      margin-top: 10px;
+      opacity: 0;
+      transition: opacity .25s ease;
+      font-weight: 600;
+      color: #27ae60;
+    }
+    .toast.show { opacity: 1; }
   </style>
 </head>
 <body>
@@ -51,7 +78,6 @@
   <script>
     // ====== MAPPINGS ======
 
-    // Cas spéciaux Biographie (on saute "Site/Acuity")
     var bioLinks = {
       "Inscription Newsletter": {
         long: "https://www.chevalblanc-patrimoine.fr/pages/inscription-emailing/",
@@ -63,7 +89,6 @@
       }
     };
 
-    // Liens Acuity (existants) + nouveaux
     var links = {
       "Post": {
         "Bilan Patrimonial offert": {
@@ -81,8 +106,7 @@
         "Nue-propriété": { "short": "https://shorturl.re/7glsg", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705753" },
         "Investir en immobilier": { "short": "https://shorturl.re/7glsi", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705755" },
         "Maîtriser sa fiscalité": { "short": "https://shorturl.re/7glsj", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705757" },
-        "Cession d'actif immobilier": { "short": "https://shorturl.re/7glsk", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=523544" },
-        "Inscription Newsletter": { "short": "https://bit.ly/4h6ydIA", "long": "https://www.chevalblanc-patrimoine.fr/pages/inscription-newsletter" }
+        "Cession d'actif immobilier": { "short": "https://shorturl.re/7glsk", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=523544" }
       },
       "Biographie": {
         "Prise de rendez-vous": { "short": "https://shorturl.re/7glsb", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=523544" },
@@ -90,7 +114,6 @@
       }
     };
 
-    // Liens Site (long/court) — maj + renommages + Home Page
     const siteLinks = {
       'Post': {
         'Home Page Site internet': {
@@ -103,21 +126,12 @@
         },
         'Stratégie': { long: 'https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/gestion-de-patrimoine/architecture-ouverte-gestion-de-patrimoine/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim', short: 'https://shorturl.re/7htrp' },
         'Assurance vie luxembourgeoise': { long: 'https://www.chevalblanc-patrimoine.fr/financier/les-meilleures-assurance-vie-luxembourgeoise/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim', short: 'https://shorturl.re/7htrq' },
-        'Équipe Sud-Ouest': { long: 'https://www.chevalblanc-patrimoine.fr/bureau-sud-ouest/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim', short: 'https://shorturl.re/7htrr' },
-        'Loi Malraux et monument historique': { long: 'https://www.chevalblanc-patrimoine.fr/immobilier/investir-avec-la-loi-monuments-historiques/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim', short: 'https://shorturl.re/7htrs' },
-        'Private Equity': { long: 'https://www.chevalblanc-patrimoine.fr/financier/investir-en-private-equity/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim', short: 'https://shorturl.re/7htrt' },
-        'FCPI': { long: 'https://www.chevalblanc-patrimoine.fr/financier/investir-en-fcpi/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim', short: 'https://shorturl.re/7htru' },
-        'SCPI': { long: 'https://www.chevalblanc-patrimoine.fr/immobilier/optimiser-son-investissement-en-scpi/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim', short: 'https://shorturl.re/7htrv' },
-        'Immobilier neuf': { long: 'https://www.chevalblanc-patrimoine.fr/immobilier/programmes-immobiliers/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim', short: 'https://shorturl.re/7htrw' },
-        'Nue-propriété': { long: 'https://www.chevalblanc-patrimoine.fr/immobilier/investir-en-nue-propriete/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim', short: 'https://shorturl.re/7htrx' },
-        'Investir en immobilier': { long: 'https://www.chevalblanc-patrimoine.fr/immobilier/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim', short: 'https://shorturl.re/7htry' },
-        'Maîtriser sa fiscalité': { long: 'https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/maitriser-ma-fiscalite/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim', short: 'https://shorturl.re/7htrz' },
-        'Cession d\'actif immobilier': { long: 'https://www.chevalblanc-patrimoine.fr/immobilier/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim', short: 'https://shorturl.re/7htry' }
+        'Équipe Sud-Ouest': { long: 'https://www.chevalblanc-patrimoine.fr/bureau-sud-ouest/?utm_source=linkedin&utm_medium=social&utm_campaign=post_joachim', short: 'https://shorturl.re/7htrr' }
       },
       'Biographie': {}
     };
 
-    // ====== UI LOGIC (sans inline handlers) ======
+    // ====== UI LOGIC ======
     function $(id){ return document.getElementById(id); }
 
     function uniqueKeys(arr){
@@ -138,7 +152,6 @@
       second.innerHTML = "";
       if (!emp) return;
 
-      // ⚠️ Fusionne les thématiques de links (Acuity) + siteLinks (Site) + bioLinks (si Biographie)
       var listA = Object.keys(links[emp] || {});
       var listS = Object.keys(siteLinks[emp] || {});
       var listB = (emp === 'Biographie') ? Object.keys(bioLinks || {}) : [];
@@ -162,8 +175,6 @@
       fourth.innerHTML = "";
       if (!theme) return;
 
-      // Cas spéciaux qui zappent "Site/Acuity"
-      // a) Biographie + thèmes bioLinks
       if (emp === "Biographie" && bioLinks.hasOwnProperty(theme)) {
         var hiddenBio = document.createElement("input");
         hiddenBio.type = "hidden";
@@ -173,7 +184,6 @@
         renderLinkType();
         return;
       }
-      // b) Post + Home Page Site internet => uniquement Site
       if (emp === "Post" && theme === "Home Page Site internet") {
         var hiddenSite = document.createElement("input");
         hiddenSite.type = "hidden";
@@ -184,7 +194,6 @@
         return;
       }
 
-      // Flow normal : on demande Site ou Acuity
       var html = ''
         + '<label for="destType">Tu veux une redirection vers le site internet ou vers le planning de RDV (Acuity) ?</label>'
         + '<select id="destType">'
@@ -219,9 +228,9 @@
     function displayLink() {
       var emp = $("emplacement").value;
       var theme = $("theme").value;
-      var type = $("linkType").value; // short/long
+      var type = $("linkType").value;
       var destEl = $("destType");
-      var dest = destEl ? destEl.value : "bio"; // site / acuity / bio
+      var dest = destEl ? destEl.value : "bio";
       var result = $("result");
       if (!emp || !theme || !type) return;
 
@@ -234,14 +243,32 @@
       }
 
       if (url) {
-        result.innerHTML = '<label style="display:block;margin-bottom:0.5rem;">Voici ton lien :</label>'
-          + '<input id="finalUrl" type="text" value="'+url+'" readonly onclick="this.select()">';
+        result.innerHTML = `
+          <label style="display:block;margin-bottom:0.5rem;">Voici ton lien :</label>
+          <div class="copy-row">
+            <input id="finalUrl" type="text" value="${url}" readonly onclick="this.select()">
+            <button class="btn" id="copyBtn">Copier le lien</button>
+          </div>
+          <div id="toast" class="toast"></div>
+        `;
+        $("copyBtn").addEventListener("click", copyToClipboard);
       } else {
         result.textContent = "Lien introuvable. Vérifie tes sélections (thématique/destination/type).";
       }
     }
 
-    // Bind initial
+    function copyToClipboard() {
+      var input = $("finalUrl");
+      if (!input) return;
+      input.select();
+      navigator.clipboard.writeText(input.value).then(() => {
+        var toast = $("toast");
+        toast.textContent = "Lien copié ✅";
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 1500);
+      });
+    }
+
     document.addEventListener("DOMContentLoaded", function(){
       $("emplacement").addEventListener("change", renderThemes);
     });
