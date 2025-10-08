@@ -32,4 +32,183 @@
   <label for="emplacement">Quel est l'emplacement ?</label>
   <select id="emplacement">
     <option value="">-- Sélectionner --</option>
-    <opti
+    <option value="Post">Post</option>
+    <option value="Biographie">Biographie</option>
+  </select>
+
+  <!-- Q2 -> Thématique -->
+  <div id="second-question"></div>
+
+  <!-- Q3 -> Destination: Site vs Acuity -->
+  <div id="fourth-question"></div>
+
+  <!-- Q4 -> Courte/Longue -->
+  <div id="third-question"></div>
+
+  <!-- Résultat -->
+  <div id="result"></div>
+
+  <script>
+    // ====== MAPPINGS ======
+
+    // Cas spéciaux Biographie (on saute "Site/Acuity")
+    var bioLinks = {
+      "Inscription Newsletter": {
+        long: "https://www.chevalblanc-patrimoine.fr/pages/inscription-emailing/",
+        short: "https://shorturl.re/7httb"
+      },
+      "Prise de rendez-vous": {
+        long: "https://chevalblancpatrimoine.as.me/?appointmentType=15105353&field:13761652=linkedin&field:13824495=social&field:15813253=post_joachim",
+        short: "https://shorturl.re/7glsu"
+      }
+    };
+
+    // Liens Acuity (existants)
+    var links = {
+      "Post": {
+        "Stratégie": { "short": "https://shorturl.re/7glsu", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=15105353" },
+        "Assurance vie luxembourgeoise": { "short": "https://shorturl.re/7glsv", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705748" },
+        "équipe Sud-Ouest": { "short": "https://shorturl.re/7glsw", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=69809186" },
+        "Loi Malraux et monument historique": { "short": "https://shorturl.re/7glsx", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=24153643" },
+        "Private Equity": { "short": "https://shorturl.re/7glsc", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=26168218" },
+        "FCPI": { "short": "https://shorturl.re/7glsd", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=523544" },
+        "SCPI": { "short": "https://shorturl.re/7glse", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=111677851" },
+        "Immobilier neuf": { "short": "https://shorturl.re/7glsf", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705752" },
+        "Nue-propriété": { "short": "https://shorturl.re/7glsg", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705753" },
+        "Investir en immobilier": { "short": "https://shorturl.re/7glsi", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705755" },
+        "Maîtriser sa fiscalité": { "short": "https://shorturl.re/7glsj", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705757" },
+        "Cession d'actif immobilier": { "short": "https://shorturl.re/7glsk", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=523544" },
+        "Inscription Newsletter": { "short": "https://bit.ly/4h6ydIA", "long": "https://www.chevalblanc-patrimoine.fr/pages/inscription-newsletter" }
+      },
+      "Biographie": {
+        "Prise de rendez-vous": { "short": "https://shorturl.re/7glsb", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=523544" },
+        "Inscription Newsletter": { "short": "https://bit.ly/4kg6vMq", "long": "https://www.chevalblanc-patrimoine.fr/pages/inscription-newsletter" }
+      }
+    };
+
+    // Liens Site (long/court)
+    var siteLinks = {
+      "Post": {
+        "Stratégie": { long: "https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/votre-bilan-patrimonial-offert/", short: "https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/votre-bilan-patrimonial-offert/" },
+        "Assurance vie luxembourgeoise": { long: "https://www.chevalblanc-patrimoine.fr/financier/les-meilleures-assurance-vie-luxembourgeoise/", short: "https://www.chevalblanc-patrimoine.fr/financier/les-meilleures-assurance-vie-luxembourgeoise/" },
+        "équipe Sud-Ouest": { long: "https://www.chevalblanc-patrimoine.fr/bureau-sud-ouest/", short: "https://www.chevalblanc-patrimoine.fr/bureau-sud-ouest/" },
+        "Loi Malraux et monument historique": { long: "https://www.chevalblanc-patrimoine.fr/immobilier/investir-avec-la-loi-monuments-historiques/", short: "https://www.chevalblanc-patrimoine.fr/immobilier/investir-avec-la-loi-monuments-historiques/" },
+        "Private Equity": { long: "https://www.chevalblanc-patrimoine.fr/financier/investir-en-private-equity/", short: "https://www.chevalblanc-patrimoine.fr/financier/investir-en-private-equity/" },
+        "FCPI": { long: "https://www.chevalblanc-patrimoine.fr/financier/investir-en-fcpi/", short: "https://www.chevalblanc-patrimoine.fr/financier/investir-en-fcpi/" },
+        "SCPI": { long: "https://www.chevalblanc-patrimoine.fr/immobilier/optimiser-son-investissement-en-scpi/", short: "https://www.chevalblanc-patrimoine.fr/immobilier/optimiser-son-investissement-en-scpi/" },
+        "Immobilier neuf": { long: "https://www.chevalblanc-patrimoine.fr/immobilier/programmes-immobiliers/", short: "https://www.chevalblanc-patrimoine.fr/immobilier/programmes-immobiliers/" },
+        "Nue-propriété": { long: "https://www.chevalblanc-patrimoine.fr/immobilier/investir-en-nue-propriete/", short: "https://www.chevalblanc-patrimoine.fr/immobilier/investir-en-nue-propriete/" },
+        "Investir en immobilier": { long: "https://www.chevalblanc-patrimoine.fr/immobilier/", short: "https://www.chevalblanc-patrimoine.fr/immobilier/" },
+        "Maîtriser sa fiscalité": { long: "https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/maitriser-ma-fiscalite/", short: "https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/maitriser-ma-fiscalite/" },
+        "Cession d'actif immobilier": { long: "https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/votre-bilan-patrimonial-offert/", short: "https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/votre-bilan-patrimonial-offert/" },
+        "Inscription Newsletter": { long: "https://www.chevalblanc-patrimoine.fr/pages/inscription-newsletter", short: "https://www.chevalblanc-patrimoine.fr/pages/inscription-newsletter" }
+      },
+      "Biographie": {} // géré par bioLinks
+    };
+
+    // ====== UI LOGIC (sans inline handlers) ======
+    function $(id){ return document.getElementById(id); }
+
+    function renderThemes() {
+      var emp = $("emplacement").value;
+      var second = $("second-question");
+      $("fourth-question").innerHTML = "";
+      $("third-question").innerHTML = "";
+      $("result").innerHTML = "";
+      second.innerHTML = "";
+      if (!emp) return;
+
+      var opts = Object.keys(links[emp] || {});
+      var html = '<label for="theme">'+(emp==='Post'?'Quelle est la thématique de ton post ?':'Quel type de lien veux-tu ?')+'</label>';
+      html += '<select id="theme"><option value="">-- Sélectionner --</option>';
+      for (var i=0;i<opts.length;i++){ html += '<option value="'+opts[i]+'">'+opts[i]+'</option>'; }
+      html += '</select>';
+      second.innerHTML = html;
+
+      $("theme").addEventListener("change", renderDestinationOrSkip);
+    }
+
+    function renderDestinationOrSkip() {
+      var emp = $("emplacement").value;
+      var theme = $("theme").value;
+      var fourth = $("fourth-question");
+      $("third-question").innerHTML = "";
+      $("result").innerHTML = "";
+      fourth.innerHTML = "";
+      if (!theme) return;
+
+      // cas spécial Biographie -> on zappe Site/Acuity
+      if (emp === "Biographie" && bioLinks.hasOwnProperty(theme)) {
+        var hidden = document.createElement("input");
+        hidden.type = "hidden";
+        hidden.id = "destType";
+        hidden.value = "bio";
+        fourth.appendChild(hidden);
+        renderLinkType();
+        return;
+      }
+
+      // flow normal
+      var html = ''
+        + '<label for="destType">Tu veux une redirection vers le site internet ou vers le planning de RDV (Acuity) ?</label>'
+        + '<select id="destType">'
+        + '  <option value="">-- Sélectionner --</option>'
+        + '  <option value="site">Site internet</option>'
+        + '  <option value="acuity">Planning RDV (Acuity)</option>'
+        + '</select>';
+      fourth.innerHTML = html;
+
+      $("destType").addEventListener("change", function(){
+        if (this.value) renderLinkType();
+      });
+    }
+
+    function renderLinkType() {
+      var third = $("third-question");
+      $("result").innerHTML = "";
+      var html = ''
+        + '<label for="linkType">Tu veux une URL courte ou longue ?</label>'
+        + '<select id="linkType">'
+        + '  <option value="">-- Sélectionner --</option>'
+        + '  <option value="short">Courte</option>'
+        + '  <option value="long">Longue</option>'
+        + '</select>';
+      third.innerHTML = html;
+
+      $("linkType").addEventListener("change", function(){
+        if (this.value) displayLink();
+      });
+    }
+
+    function displayLink() {
+      var emp = $("emplacement").value;
+      var theme = $("theme").value;
+      var type = $("linkType").value; // short/long
+      var destEl = $("destType");
+      var dest = destEl ? destEl.value : "bio"; // site / acuity / bio
+      var result = $("result");
+      if (!emp || !theme || !type) return;
+
+      var url = "";
+      if (emp === "Biographie" && bioLinks.hasOwnProperty(theme)) {
+        url = bioLinks[theme][type] || "";
+      } else {
+        var map = (dest === "acuity") ? links : siteLinks;
+        url = map[emp] && map[emp][theme] ? (map[emp][theme][type] || "") : "";
+      }
+
+      if (url) {
+        result.innerHTML = '<label style="display:block;margin-bottom:0.5rem;">Voici ton lien :</label>'
+          + '<input id="finalUrl" type="text" value="'+url+'" readonly onclick="this.select()">';
+      } else {
+        result.textContent = "Lien introuvable. Vérifie tes sélections (thématique/destination/type).";
+      }
+    }
+
+    // Bind initial
+    document.addEventListener("DOMContentLoaded", function(){
+      $("emplacement").addEventListener("change", renderThemes);
+    });
+  </script>
+</body>
+</html>
