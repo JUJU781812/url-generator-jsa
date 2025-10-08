@@ -75,4 +75,54 @@
         "Immobilier neuf": { "short": "https://shorturl.re/7glsf", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705752" },
         "Nue-propriété": { "short": "https://shorturl.re/7glsg", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705753" },
         "Investir en immobilier": { "short": "https://shorturl.re/7glsi", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705755" },
-        "Maîtriser sa fiscalité": { "short": "https://shorturl.re/7glsj", "long": "https://chevalblancpatrimoine.as
+        "Maîtriser sa fiscalité": { "short": "https://shorturl.re/7glsj", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=68705757" },
+        "Cession d'actif immobilier": { "short": "https://shorturl.re/7glsk", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=523544" },
+        "Inscription Newsletter": { "short": "https://bit.ly/4h6ydIA", "long": "https://www.chevalblanc-patrimoine.fr/pages/inscription-newsletter" }
+      },
+      "Biographie": {
+        "Prise de rendez-vous": { "short": "https://shorturl.re/7glsb", "long": "https://chevalblancpatrimoine.as.me/?appointmentType=523544" },
+        "Inscription Newsletter": { "short": "https://bit.ly/4kg6vMq", "long": "https://www.chevalblanc-patrimoine.fr/pages/inscription-newsletter" }
+      }
+    };
+
+    // --- LIENS SITE (long/court)
+    const siteLinks = {
+      "Post": {
+        "Stratégie": { long: "https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/votre-bilan-patrimonial-offert/", short: "https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/votre-bilan-patrimonial-offert/" },
+        "Assurance vie luxembourgeoise": { long: "https://www.chevalblanc-patrimoine.fr/financier/les-meilleures-assurance-vie-luxembourgeoise/", short: "https://www.chevalblanc-patrimoine.fr/financier/les-meilleures-assurance-vie-luxembourgeoise/" },
+        "équipe Sud-Ouest": { long: "https://www.chevalblanc-patrimoine.fr/bureau-sud-ouest/", short: "https://www.chevalblanc-patrimoine.fr/bureau-sud-ouest/" },
+        "Loi Malraux et monument historique": { long: "https://www.chevalblanc-patrimoine.fr/immobilier/investir-avec-la-loi-monuments-historiques/", short: "https://www.chevalblanc-patrimoine.fr/immobilier/investir-avec-la-loi-monuments-historiques/" },
+        "Private Equity": { long: "https://www.chevalblanc-patrimoine.fr/financier/investir-en-private-equity/", short: "https://www.chevalblanc-patrimoine.fr/financier/investir-en-private-equity/" },
+        "FCPI": { long: "https://www.chevalblanc-patrimoine.fr/financier/investir-en-fcpi/", short: "https://www.chevalblanc-patrimoine.fr/financier/investir-en-fcpi/" },
+        "SCPI": { long: "https://www.chevalblanc-patrimoine.fr/immobilier/optimiser-son-investissement-en-scpi/", short: "https://www.chevalblanc-patrimoine.fr/immobilier/optimiser-son-investissement-en-scpi/" },
+        "Immobilier neuf": { long: "https://www.chevalblanc-patrimoine.fr/immobilier/programmes-immobiliers/", short: "https://www.chevalblanc-patrimoine.fr/immobilier/programmes-immobiliers/" },
+        "Nue-propriété": { long: "https://www.chevalblanc-patrimoine.fr/immobilier/investir-en-nue-propriete/", short: "https://www.chevalblanc-patrimoine.fr/immobilier/investir-en-nue-propriete/" },
+        "Investir en immobilier": { long: "https://www.chevalblanc-patrimoine.fr/immobilier/", short: "https://www.chevalblanc-patrimoine.fr/immobilier/" },
+        "Maîtriser sa fiscalité": { long: "https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/maitriser-ma-fiscalite/", short: "https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/maitriser-ma-fiscalite/" },
+        "Cession d'actif immobilier": { long: "https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/votre-bilan-patrimonial-offert/", short: "https://www.chevalblanc-patrimoine.fr/conseil-ingenierie/votre-bilan-patrimonial-offert/" },
+        "Inscription Newsletter": { long: "https://www.chevalblanc-patrimoine.fr/pages/inscription-newsletter", short: "https://www.chevalblanc-patrimoine.fr/pages/inscription-newsletter" }
+      },
+      "Biographie": {} // biographie gérée par bioLinks
+    };
+
+    // ---- Logique UI
+
+    function updateSecondQuestion() {
+      const emp = document.getElementById("emplacement").value;
+      const secondDiv = document.getElementById("second-question");
+      document.getElementById("third-question").innerHTML = "";
+      document.getElementById("fourth-question").innerHTML = "";
+      document.getElementById("result").innerHTML = "";
+      secondDiv.innerHTML = "";
+      if (!emp) return;
+
+      const options = Object.keys(links[emp] || {});
+      let html = `<label for="theme">${emp === 'Post' ? "Quelle est la thématique de ton post ?" : "Quel type de lien veux-tu ?"}</label>`;
+      html += `<select id="theme" onchange="afterTheme()"><option value="">-- Sélectionner --</option>`;
+      options.forEach(t => { html += `<option value="${t}">${t}</option>`; });
+      html += `</select>`;
+      secondDiv.innerHTML = html;
+    }
+
+    function afterTheme() {
+      const emp = document.getElementById("e
