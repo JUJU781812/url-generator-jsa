@@ -120,6 +120,15 @@
     // ====== UI LOGIC (sans inline handlers) ======
     function $(id){ return document.getElementById(id); }
 
+    function uniqueKeys(arr){
+      var seen = {}, out = [];
+      for (var i=0;i<arr.length;i++){
+        var k = arr[i];
+        if (!seen[k]) { seen[k]=1; out.push(k); }
+      }
+      return out;
+    }
+
     function renderThemes() {
       var emp = $("emplacement").value;
       var second = $("second-question");
@@ -129,7 +138,12 @@
       second.innerHTML = "";
       if (!emp) return;
 
-      var opts = Object.keys(links[emp] || {});
+      // ⚠️ Fusionne les thématiques de links (Acuity) + siteLinks (Site) + bioLinks (si Biographie)
+      var listA = Object.keys(links[emp] || {});
+      var listS = Object.keys(siteLinks[emp] || {});
+      var listB = (emp === 'Biographie') ? Object.keys(bioLinks || {}) : [];
+      var opts = uniqueKeys(listA.concat(listS).concat(listB)).sort();
+
       var html = '<label for="theme">'+(emp==='Post'?'Quelle est la thématique de ton post ?':'Quel type de lien veux-tu ?')+'</label>';
       html += '<select id="theme"><option value="">-- Sélectionner --</option>';
       for (var i=0;i<opts.length;i++){ html += '<option value="'+opts[i]+'">'+opts[i]+'</option>'; }
